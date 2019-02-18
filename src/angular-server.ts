@@ -1,5 +1,4 @@
 import * as express from "express"
-import * as http from "http"
 import * as https from "https"
 import { HTTPSProvider } from "https-provider"
 import * as path from "path"
@@ -8,7 +7,6 @@ export class AngularServer {
 
     private readonly expressApp: any = express()
     private info: string = ""
-    private httpServer: any
     private httpsServer: any
     private options: any
 
@@ -21,37 +19,26 @@ export class AngularServer {
 
     }
 
-    public start(port: number, certificatesFileName: string): string {
+    public start(certificatesFileName: string): string {
 
-        if (port === 443) {
-            try {
-                this.options = new HTTPSProvider(certificatesFileName).provideHTTPSOptions()
-                this.httpsServer = https.createServer(this.options, this.expressApp)
-                this.httpsServer.listen(port)
-                this.info = `HTTPS Server is listening or port ${port}`
+        try {
+            this.options = new HTTPSProvider(certificatesFileName).provideHTTPSOptions()
+            this.httpsServer = https.createServer(this.options, this.expressApp)
+            this.httpsServer.listen(port)
+            this.info = `HTTPS Server is listening or port ${port}`
 
-                this.expressApp.use("/*", require("redirect-https")({
-                    body: "<!-- Hello Mr Developer! Please use HTTPS instead -->",
-                }))
+            this.expressApp.use("/*", require("redirect-https")({
+                body: "<!-- Hello Mr Developer! Please use HTTPS instead -->",
+            }))
 
-            } catch (error) {
-                this.info = `certificates? \n${error}`
-            }
-
-        } else if (port >= 3000 && port < 8500) {
-            this.httpServer = http.createServer(this.expressApp)
-            this.httpServer.listen(port)
-            this.info = `HTTP Server is listening or port ${port}`
-        } else {
-            this.info = `strange port: ${port}`
+        } catch (error) {
+            this.info = `certificates? \n${error}`
         }
 
         return this.info
     }
 
 }
-
-const angularServerPort: number = 443
 
 const hdPath: string = (process.env.HD_PATH === undefined) ?
     "../chat-frontend" :
@@ -64,4 +51,4 @@ const nameOfCertificatesFile: string = (process.env.NAMEOF_CERT_FILE === undefin
 const angularServer: AngularServer = new AngularServer(hdPath)
 
 // tslint:disable-next-line:no-console
-console.log(angularServer.start(angularServerPort, nameOfCertificatesFile))
+console.log(angularServer.start(nameOfCertificatesFile))
