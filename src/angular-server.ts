@@ -51,7 +51,7 @@ export class AngularServer {
 
 const angularServerPort: number = (process.env.PORT === undefined) ?
     Number(process.argv[2]) :
-    Number(process.env.CHAT_SERVER_PORT)
+    Number(process.env.PORT)
 
 const hdPath: string = (process.env.HD_PATH === undefined) ?
     "../dist/chat-frontend" :
