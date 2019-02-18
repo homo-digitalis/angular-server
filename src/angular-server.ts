@@ -24,8 +24,8 @@ export class AngularServer {
         try {
             this.options = new HTTPSProvider(certificatesFileName).provideHTTPSOptions()
             this.httpsServer = https.createServer(this.options, this.expressApp)
-            this.httpsServer.listen(port)
-            this.info = `HTTPS Server is listening or port ${port}`
+            this.httpsServer.listen(443)
+            this.info = "HTTPS Server is listening or port 443"
 
             this.expressApp.use("/*", require("redirect-https")({
                 body: "<!-- Hello Mr Developer! Please use HTTPS instead -->",
