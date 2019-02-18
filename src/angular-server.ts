@@ -38,10 +38,12 @@ export class AngularServer {
                 this.info = `certificates? \n${error}`
             }
 
-        } else {
+        } else if (port >= 3000 && port < 8500) {
             this.httpServer = http.createServer(this.expressApp)
             this.httpServer.listen(port)
             this.info = `HTTP Server is listening or port ${port}`
+        } else {
+            this.info = `strange port: ${port}`
         }
 
         return this.info
@@ -49,12 +51,10 @@ export class AngularServer {
 
 }
 
-const angularServerPort: number = (process.env.PORT === undefined) ?
-    Number(process.argv[2]) :
-    Number(process.env.PORT)
+const angularServerPort: number = 443
 
 const hdPath: string = (process.env.HD_PATH === undefined) ?
-    "../dist/chat-frontend" :
+    "../chat-frontend" :
     process.env.HD_PATH
 
 const nameOfCertificatesFile: string = (process.env.NAMEOF_CERT_FILE === undefined) ?
