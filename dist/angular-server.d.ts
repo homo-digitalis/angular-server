@@ -5,5 +5,5 @@ export declare class AngularServer {
     private httpsServer;
     private options;
     constructor(relativePathToAssets: string);
-    start(port: number): string;
+    start(port: number, certificatesFileName: string): string;
 }

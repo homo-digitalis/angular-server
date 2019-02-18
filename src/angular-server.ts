@@ -35,7 +35,7 @@ export class AngularServer {
                 }))
 
             } catch (error) {
-                this.info = "certificates?"
+                this.info = `certificates? \n${error}`
             }
 
         } else {
