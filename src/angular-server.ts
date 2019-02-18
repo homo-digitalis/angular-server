@@ -21,11 +21,11 @@ export class AngularServer {
 
     }
 
-    public start(port: number): string {
+    public start(port: number, certificatesFileName: string): string {
 
         if (port === 443) {
             try {
-                this.options = new HTTPSProvider("angular-server-certificate").provideHTTPSOptions()
+                this.options = new HTTPSProvider(certificatesFileName).provideHTTPSOptions()
                 this.httpsServer = https.createServer(this.options, this.expressApp)
                 this.httpsServer.listen(port)
                 this.info = `HTTPS Server is listening or port ${port}`
@@ -57,7 +57,11 @@ const hdPath: string = (process.env.HD_PATH === undefined) ?
     "../dist/chat-frontend" :
     process.env.HD_PATH
 
+const nameOfCertificatesFile: string = (process.env.NAMEOF_CERT_FILE === undefined) ?
+    "angular-server-certificate" :
+    process.env.NAMEOF_CERT_FILE
+
 const angularServer: AngularServer = new AngularServer(hdPath)
 
 // tslint:disable-next-line:no-console
-console.log(angularServer.start(angularServerPort))
+console.log(angularServer.start(angularServerPort, nameOfCertificatesFile))

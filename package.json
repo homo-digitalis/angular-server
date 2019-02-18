@@ -6,7 +6,7 @@
   "typings": "./dist/index.js",
   "scripts": {
     "tslint": "tslint -p ./",
-    "pm2-start": "PORT=443 pm2 start src/angular-server.ts",
+    "pm2-start": "PORT=443 pm2 start src/angular-server.ts 443",
     "git-init": "rm -rf .git && git init && git config --local credential.helper \"\" && git config --local user.email \"homo-digitalis@gmx.de\" && git config --local user.name \"homo-digitalis\"",
     "bp": "npm run tslint && rm -rf ./dist && rm -rf ./node_modules && npm i --save && tsc && npm publish"
   },
