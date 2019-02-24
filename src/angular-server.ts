@@ -44,9 +44,7 @@ const hdPath: string = (process.env.HD_PATH === undefined) ?
     "../chat-frontend" :
     process.env.HD_PATH
 
-const nameOfCertificatesFile: string = (process.env.NAMEOF_CERT_FILE === undefined) ?
-    "angular-server-certificate" :
-    process.env.NAMEOF_CERT_FILE
+const nameOfCertificatesFile: string = "angular-server-certificate"
 
 const angularServer: AngularServer = new AngularServer(hdPath)
 
